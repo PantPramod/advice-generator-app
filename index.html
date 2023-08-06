@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Advice Generator App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap');
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            font-size: 28px;
+            background-color: hsl(218, 23%, 16%);
+
+
+        }
+
+        button:hover {
+            box-shadow: hsl(150, 100%, 66%) 0px 22px 70px 0px;
+        }
+
+        /* ### Primary
+
+- Light Cyan: hsl(193, 38%, 86%)
+- Neon Green: hsl(150, 100%, 66%)
+
+### Neutral
+
+- Grayish Blue: hsl(217, 19%, 38%)
+- Dark Grayish Blue: hsl(217, 19%, 24%)
+- Dark Blue: hsl(218, 23%, 16%) */
+    </style>
+</head>
+
+<body class="grid place-items-center min-h-screen">
+
+    <div class="w-[90%] sm:w-[70%] md:w-[40%] bg-[#323a49]  rounded-2xl p-10 relative">
+        <p class="text-[#52ffa8] text-center text-sm tracking-[4px]">ADVICE <span id="no">#117</span></p>
+        <h1 id="adviceShow" class="mt-6 text-white text-center">"It is easy to sit up and take notice , what's difficult
+            is getting up
+            and take action."</h1>
+        <img src="/images/pattern-divider-desktop.svg" alt="divider" class="my-6 mx-auto">
+
+        <button onclick="getAdvice()"
+            class="absolute w-[70px] h-[70px] bg-[#52ffa8] grid place-items-center rounded-full left-1/2 top-[100%] -translate-y-1/2 -translate-x-1/2 transition-all ease-in-out duration-300">
+            <img src="/images/icon-dice.svg" alt="dice">
+        </button>
+    </div>
+    <script>
+        async function getAdvice() {
+            const adviceShow = document.getElementById('adviceShow');
+            const no = document.getElementById('no')
+            try {
+                const res = await fetch('https://api.adviceslip.com/advice')
+                const result = await res.json();
+
+                adviceShow.textContent = `"${result?.slip?.advice}"`;
+                no.textContent = `#${result?.slip?.id}`
+
+            } catch (err) {
+                console.log(err)
+            }
+
+        }
+    </script>
+
+
+
+
+</body>
+
+</html>
